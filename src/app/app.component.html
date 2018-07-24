@@ -23,11 +23,11 @@
 			<label *ngIf="inGame">,
 				<input type="text" [(ngModel)]="input" (keyup.enter)="enter($event)" #myInput/>{{ myInput.focus() }}</label>
 		</h3>
-		<h4 class="incorrect" *ngIf="incorrect.length> 0">
+		<div class="incorrect" *ngIf="incorrect.length> 0">
 			Mistakes:
 			<label *ngFor="let num of incorrect">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;
 			</label>
-		</h4>
+		</div>
 		<h3>
 			<span *ngIf="!inGame">Click to start</span>
 		</h3>

@@ -1,22 +1,24 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 /* You can add global styles to this file, and also import other style files */
+div{
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 h1{
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	font-size: 70px;
 	color:darkblue
 }
 
 h2{
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	color:chocolate;
 	font-size: 40px;
 }
 
 span{
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	color: darkgrey;
-	font-size: 15px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 input{

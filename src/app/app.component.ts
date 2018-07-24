@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
 			this.subscription.unsubscribe();
 			if (this.next != this.input) {
 				this.incorrect.push(this.input);
-				this.time -= 3;
+				this.time -= 2;
 				if (this.incorrect.length == 3) {
 					this.gameOver();
 				}
@@ -101,7 +101,8 @@ export class AppComponent implements OnInit {
 
 	nextPrime(num: number) {
 		while (true) {
-			let max = angularMath.powerOfNumber(++num, 0.5);
+			num+=2;
+			let max = angularMath.powerOfNumber(num, 0.5);
 			let isPrime = true;
 			for (let i = 2; i <= max; i++) {
 				if (num % i == 0) {
