@@ -1,18 +1,28 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
 /* You can add global styles to this file, and also import other style files */
 h1{
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-	font-size: 60px;
+	font-size: 70px;
 	color:darkblue
 }
 
 h2{
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-	color: crimson;
-	font-size: 50px;
+	color:chocolate;
+	font-size: 40px;
 }
 
-h2 span{
+span{
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	color: darkgrey;
 	font-size: 15px;
+}
+
+input{
+	width: 100px;
+}
+
+.incorrect{
+	color: red;
 }
