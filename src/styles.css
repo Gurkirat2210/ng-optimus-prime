@@ -1,8 +1,17 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 /* You can add global styles to this file, and also import other style files */
-div{
+#container{
+	margin: 15px;
 	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	text-align:center;
+}
+
+.footer{
+	position: absolute;
+	bottom: 15px;
+	text-align: center;
+	width: 100%;
 }
 
 h1{
