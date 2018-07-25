@@ -1,38 +1,36 @@
 <div id="container" (click)="enter($event)">
 	<h1>
 		OPTIMUS PRIME
+		<br><span>gurkirat2412@gmail.com</span>
 	</h1>
 	<div class="row">
-		<h2 class="col-sm-6">
+		<h2 class="col-sm-6 left">
 			<span>Score</span>
 			<br> {{score}}
 		</h2>
-		<h2 class="col-sm-6" *ngIf=" !inGame ">
+		<h2 class="col-sm-6 right" *ngIf=" !inGame ">
 			<span>Best</span>
 			<br> {{best}}
 		</h2>
-		<h2 class="col-sm-6" *ngIf=" inGame ">
+		<h2 class="col-sm-6 right" *ngIf=" inGame ">
 			<span>Time</span>
 			<br> {{time}}
 		</h2>
 	</div>
-	<div>
+	<div class="list">
 		<h3>
 			<span>Guess the next prime number</span>
 			<br>{{prevStr}}
 			<label *ngIf="inGame">,
-				<input type="text" [(ngModel)]="input" (keyup.enter)="enter($event)" #myInput/>{{ myInput.focus() }}</label>
+				<input type="text" [(ngModel)]="input" (keyup)="enter($event)" #myInput/>{{ myInput.focus() }}</label>
 		</h3>
-		<div class="incorrect" *ngIf="incorrect.length> 0">
-			Mistakes:
-			<label *ngFor="let num of incorrect">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;
+		<div class="incorrect" *ngIf="toLearn.length> 0">
+			Remember:
+			<label *ngFor="let num of toLearn">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;
 			</label>
 		</div>
 		<h3>
 			<span *ngIf="!inGame">Click to start</span>
 		</h3>
 	</div>
-</div>
-<div class="footer">
-	<span>gurkirat2412@gmail.com</span>
 </div>

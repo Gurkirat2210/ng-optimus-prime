@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 	timer = timer(0, 1000);
 	subscription: Subscription;
 
-	incorrect: number[] = [];
+	toLearn: number[] = [];
 	time: number = null;
 	score: number = 0;
 	best: number = 0;
@@ -21,8 +21,9 @@ export class AppComponent implements OnInit {
 	prev: number = 5;
 	prevStr: string = '2, 3, 5';
 	next: number = null;
-	input: number = null;
+	input: string = null;
 	inGame: boolean = false;
+	level: number = 0;
 
 	ngOnInit(): void {
 		this.best = parseInt(localStorage.getItem('best'));
@@ -53,31 +54,30 @@ export class AppComponent implements OnInit {
 		this.inGame = false;
 	}
 
-	onSubmit(): void {
-		this.input = parseInt(''+this.input);
+	onSubmit(autoInput: boolean): void {
+		let input = parseInt(this.input);
 
 		if (this.input) {
-
-			this.subscription.unsubscribe();
-			if (this.next != this.input) {
-				this.incorrect.push(this.input);
-				this.time -= 2;
-				if (this.incorrect.length == 3) {
+			let level = this.getLevel(input);
+			let correct = this.next == input;
+			let incorrect = !correct && (!autoInput || this.level == level);
+			if (correct) {
+				this.score++;
+				this.time += (level * 3);
+			} else if (incorrect) {
+				this.toLearn.push(this.next);
+				this.time -= level;
+				if (this.toLearn.length == this.level) {
 					this.gameOver();
 				}
-			} else {
-
-				this.score++;
-				while (this.input > 1) {
-					this.time += 3;
-					this.input = this.input / 10;
-				}
 			}
-			this.prevStr += ', ' + this.next;
-			this.next = this.nextPrime(this.next);
-			this.startTimer();
+			if (correct || incorrect) {
+				this.prevStr += ', ' + this.next;
+				this.next = this.nextPrime(this.next);
+				this.level = this.getLevel(this.next);
+				this.input = null;
+			}
 		}
-		this.input = null;
 	}
 
 	begin(): void {
@@ -85,15 +85,17 @@ export class AppComponent implements OnInit {
 		this.score = 0;
 		this.prev = 5;
 		this.prevStr = '2, 3, 5';
-		this.incorrect = [];
+		this.toLearn = [];
 		this.inGame = true;
 		this.next = this.nextPrime(this.prev);
+		this.level = this.getLevel(this.next);
+		this.input = null;
 		this.startTimer();
 	}
 
 	enter(event: any): void {
 		if (this.inGame) {
-			this.onSubmit();
+			this.onSubmit(event.keyCode != 13);
 		} else {
 			this.begin();
 		}
@@ -101,7 +103,7 @@ export class AppComponent implements OnInit {
 
 	nextPrime(num: number) {
 		while (true) {
-			num+=2;
+			num += 2;
 			let max = angularMath.powerOfNumber(num, 0.5);
 			let isPrime = true;
 			for (let i = 2; i <= max; i++) {
@@ -115,6 +117,15 @@ export class AppComponent implements OnInit {
 				return num;
 			}
 		}
+	}
+
+	getLevel(num: number) {
+		let toRet = 1;
+		while (num >= 1) {
+			toRet++;
+			num = num / 10;
+		}
+		return toRet;
 	}
 
 }
