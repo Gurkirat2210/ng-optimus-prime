@@ -12,6 +12,9 @@
 			<span>Best</span>
 			<br> {{best}}
 		</h2>
+		<h5 class="col-sm-12 right" *ngIf=" !inGame && score >= best && score>0">
+			!! New Highscore !!
+		</h5>
 		<h2 class="col-sm-6 right" *ngIf=" inGame ">
 			<span>Time</span>
 			<br> {{time}}
@@ -22,7 +25,7 @@
 			<span>Guess the next prime number</span>
 			<br>{{prevStr}}
 			<label *ngIf="inGame">,
-				<input type="text" [(ngModel)]="input" (keyup)="enter($event)" #myInput/>{{ myInput.focus() }}</label>
+				<input type="number" min="1" [(ngModel)]="input" (keyup)="enter($event)" #myInput/>{{ myInput.focus() }}</label>
 		</h3>
 		<div class="incorrect" *ngIf="toLearn.length> 0">
 			Remember:

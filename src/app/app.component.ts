@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 			let incorrect = !correct && (!autoInput || this.level == level);
 			if (correct) {
 				this.score++;
-				this.time += (level * 3);
+				this.time += (level * 2);
 			} else if (incorrect) {
 				this.toLearn.push(this.next);
 				this.time -= level;
