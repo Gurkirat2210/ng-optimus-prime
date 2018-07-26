@@ -1,24 +1,56 @@
 <div id="container" (click)="enter($event)">
 	<h1>
 		OPTIMUS PRIME
-		<br><span>gurkirat2412@gmail.com</span>
+		<br>
+		<span>gurkirat2412@gmail.com</span>
 	</h1>
-	<div class="row">
-		<h2 class="col-sm-6 left">
-			<span>Score</span>
-			<br> {{score}}
-		</h2>
-		<h2 class="col-sm-6 right" *ngIf=" !inGame ">
-			<span>Best</span>
-			<br> {{best}}
-		</h2>
-		<h5 class="col-sm-12 right" *ngIf=" !inGame && score >= best && score>0">
-			!! New Highscore !!
-		</h5>
-		<h2 class="col-sm-6 right" *ngIf=" inGame ">
-			<span>Time</span>
-			<br> {{time}}
-		</h2>
+	<div class="row" *ngIf=" inGame ">
+		<div class="width-25">
+			<h2>
+				<span>Level</span>
+				<br> {{level}}
+			</h2>
+		</div>
+		<div class="width-25">
+			<h2>
+				<span>Score</span>
+				<br> {{score}}
+			</h2>
+		</div>
+		<div class="width-25">
+			<h2>
+				<span>Time</span>
+				<br> {{time}}
+			</h2>
+		</div>
+		<div class="width-25">
+			<h2>
+				<span>Lives</span>
+				<br>{{lives}}
+			</h2>
+		</div>
+	</div>
+	<div class="row" *ngIf=" !inGame ">
+		<div class="width-33">
+			<h2>
+				<span>Your Best</span>
+				<br> {{best}}
+			</h2>
+		</div>
+		<div class="width-33">
+			<h2>
+				<span>Score</span>
+				<br> {{score}}
+			</h2>
+		</div>
+		<div class="width-33">
+			<h2>
+				<span>Global Best</span>
+				<br>Coming&nbsp;Soon
+			</h2>
+		</div>
+		<div>
+		</div>
 	</div>
 	<div class="list">
 		<h3>

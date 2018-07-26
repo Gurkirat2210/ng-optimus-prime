@@ -13,19 +13,26 @@ export class AppComponent implements OnInit {
 	timer = timer(0, 1000);
 	subscription: Subscription;
 
-	toLearn: number[] = [];
-	time: number = null;
-	score: number = 0;
-	best: number = 0;
+	TIME: number = 10;
+	START: number = 5;
+	START_STR: string = "2, 3";
+	TIME_MUL: number = 3;
 
-	prev: number = 5;
-	prevStr: string = '2, 3, 5';
-	next: number = null;
-	input: string = null;
+	toLearn: number[] = [];
+	score: number = 0;
+	time: number;
+	best: number;
+	prev: number;
+	prevStr: string;
+	next: number;
+	lives: number;
+	level: number;
+	input: string;
 	inGame: boolean = false;
-	level: number = 0;
 
 	ngOnInit(): void {
+		this.prev = this.START;
+		this.prevStr = this.START_STR
 		this.best = parseInt(localStorage.getItem('best'));
 		if (!this.best) {
 			this.best = 0;
@@ -39,6 +46,9 @@ export class AppComponent implements OnInit {
 		this.subscription = this.timer.subscribe(ticks => {
 			if (this.time - 1 > 0) {
 				this.time--;
+			} else if (this.lives > 1) {
+				this.lives--;
+				this.time = this.TIME;
 			} else {
 				this.gameOver();
 			}
@@ -63,11 +73,12 @@ export class AppComponent implements OnInit {
 			let incorrect = !correct && (!autoInput || this.level == level);
 			if (correct) {
 				this.score++;
-				this.time += (level * 2);
+				this.time += (level * this.TIME_MUL);
 			} else if (incorrect) {
 				this.toLearn.push(this.next);
 				this.time -= level;
-				if (this.toLearn.length == this.level) {
+				this.lives--;
+				if (this.lives == 0) {
 					this.gameOver();
 				}
 			}
@@ -75,20 +86,22 @@ export class AppComponent implements OnInit {
 				this.prevStr += ', ' + this.next;
 				this.next = this.nextPrime(this.next);
 				this.level = this.getLevel(this.next);
+				this.lives = this.getLives(this.level, this.toLearn.length);
 				this.input = null;
 			}
 		}
 	}
 
 	begin(): void {
-		this.time = 10;
+		this.time = this.TIME;
 		this.score = 0;
-		this.prev = 5;
-		this.prevStr = '2, 3, 5';
+		this.prev = this.START
+		this.prevStr = this.START_STR
 		this.toLearn = [];
 		this.inGame = true;
 		this.next = this.nextPrime(this.prev);
 		this.level = this.getLevel(this.next);
+		this.lives = this.getLives(this.level, this.toLearn.length);
 		this.input = null;
 		this.startTimer();
 	}
@@ -120,7 +133,7 @@ export class AppComponent implements OnInit {
 	}
 
 	getLevel(num: number) {
-		let toRet = 1;
+		let toRet = 0;
 		while (num >= 1) {
 			toRet++;
 			num = num / 10;
@@ -128,4 +141,7 @@ export class AppComponent implements OnInit {
 		return toRet;
 	}
 
+	getLives(level: number, mistakes: number) {
+		return level - mistakes + 1;
+	}
 }
