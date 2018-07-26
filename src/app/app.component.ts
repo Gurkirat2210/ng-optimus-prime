@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter } from '@
 import { timer } from 'rxjs';
 import { Subscription } from "rxjs";
 import { angularMath } from 'angular-ts-math';
+import { LeaderboardService } from './leaderboard.service';
 
 @Component({
 	selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
 	subscription: Subscription;
 
 	TIME: number = 10;
-	START: number = 5;
+	START: number = 3;
 	START_STR: string = "2, 3";
 	TIME_MUL: number = 3;
 
@@ -29,6 +30,11 @@ export class AppComponent implements OnInit {
 	level: number;
 	input: string;
 	inGame: boolean = false;
+	gBest: number;
+
+
+	constructor(private service: LeaderboardService,
+	) { }
 
 	ngOnInit(): void {
 		this.prev = this.START;
@@ -37,6 +43,7 @@ export class AppComponent implements OnInit {
 		if (!this.best) {
 			this.best = 0;
 		}
+		this.service.getGlobalBest().subscribe(result => this.gBest = result);
 	}
 
 	startTimer(): void {
