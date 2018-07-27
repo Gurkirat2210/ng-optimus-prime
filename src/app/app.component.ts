@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter } from '@
 import { timer } from 'rxjs';
 import { Subscription } from "rxjs";
 import { angularMath } from 'angular-ts-math';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-root',
@@ -10,13 +13,21 @@ import { angularMath } from 'angular-ts-math';
 })
 export class AppComponent implements OnInit {
 
+	constructor(private http: HttpClient) {
+		this.http.get('https://jsonip.com').subscribe((ipOfNetwork) =>
+			this.ipAddress = ipOfNetwork['ip']);
+	}
+
 	timer = timer(0, 1000);
 	subscription: Subscription;
-
+	ipAddress: Object;
+	SERVER_GET: string = "http://182.71.214.83:3000/get";
+	SERVER_SAVE: string = "http://182.71.214.83:3000/save";
 	TIME: number = 10;
 	START: number = 3;
 	START_STR: string = "2, 3";
 	TIME_MUL: number = 3;
+
 
 	toLearn: number[] = [];
 	score: number = 0;
@@ -27,9 +38,10 @@ export class AppComponent implements OnInit {
 	next: number;
 	lives: number;
 	level: number;
-	input: string;
+	input: number;
 	inGame: boolean = false;
-	gBest: number;
+	name: string;
+	gBest: { score: any, initials: string } = { score: null, initials: null };
 
 
 	ngOnInit(): void {
@@ -39,7 +51,24 @@ export class AppComponent implements OnInit {
 		if (!this.best) {
 			this.best = 0;
 		}
-//		this.service.getGlobalBest().subscribe(result => this.gBest = result);
+
+		this.http.get(this.SERVER_GET).subscribe(res => {
+			this.gBest = <{ score: any, initials: string }>res;
+			this.saveGBestLocally();
+		});
+
+		if (this.gBest.score == null || this.gBest.initials == null) {
+			this.gBest.score = localStorage.getItem('gBest');
+			this.gBest.initials = localStorage.getItem('gBestIni');
+		}
+		
+		if (this.gBest.score && this.best > this.gBest.score) {
+			this.gBest.score = this.best;
+			this.gBest.initials = this.ipAddress + '';
+			this.saveGBestGlobally();
+		}
+
+
 	}
 
 	startTimer(): void {
@@ -64,11 +93,19 @@ export class AppComponent implements OnInit {
 			this.best = this.score;
 		}
 		localStorage.setItem('best', this.best + '');
+
+		if (this.best > this.gBest.score) {
+			this.gBest.score = this.best;
+			this.gBest.initials = this.ipAddress.toString();
+			this.saveGBestLocally();
+			this.saveGBestGlobally();
+		}
+
 		this.inGame = false;
 	}
 
 	onSubmit(autoInput: boolean): void {
-		let input = parseInt(this.input);
+		let input = parseInt(this.input + '');
 
 		if (this.input) {
 			let level = this.getLevel(input);
@@ -113,6 +150,7 @@ export class AppComponent implements OnInit {
 		if (this.inGame) {
 			this.onSubmit(event.keyCode != 13);
 		} else {
+			this.name = name;
 			this.begin();
 		}
 	}
@@ -147,4 +185,22 @@ export class AppComponent implements OnInit {
 	getLives(level: number, mistakes: number) {
 		return level - mistakes + 1;
 	}
+
+	saveGBestLocally() {
+		localStorage.setItem('gBest', this.gBest.score);
+		localStorage.setItem('gBestIni', this.gBest.initials);
+	}
+
+	saveGBestGlobally() {
+		this.http.post(this.SERVER_SAVE, this.gBest, {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json'
+			})
+		}).pipe(catchError(err => {
+			throw err;
+		})).subscribe(res => {
+			console.log(res);
+		});
+	}
+
 }
