@@ -46,8 +46,7 @@
 		<div class="width-33">
 			<h2>
 				<span>Global Best</span>
-				<br>{{gBest.score}}
-				<br><span></span>
+				<br>{{gBest.score}}<img *ngIf="!gBest.score" class="loader" src="assets/loader2.gif"/>
 			</h2>
 		</div>
 		<div>

@@ -52,19 +52,22 @@ export class AppComponent implements OnInit {
 			this.best = 0;
 		}
 
-		this.http.get(this.SERVER_GET).subscribe(res => {
-			this.gBest = <{ score: any, initials: string }>res;
-			if (this.gBest.score != null && this.best > this.gBest.score) {
-				this.gBest.score = this.best;
-				this.gBest.initials = this.ipAddress + '';
-				this.saveGBestGlobally();
-			}
-			this.saveGBestLocally();
+		this.http.get('https://jsonip.com').subscribe(ipOfNetwork => {
+			this.ipAddress = ipOfNetwork['ip'];
+			this.http.get(this.SERVER_GET).subscribe(res => {
+				this.gBest = <{ score: any, initials: string }>res;
+				if (this.gBest.score != null && this.best > this.gBest.score) {
+					this.gBest.score = this.best;
+					this.gBest.initials = this.ipAddress + '';
+					this.saveGBestGlobally();
+				}
+				this.saveGBestLocally();
+			});
 		});
 
-		if (this.gBest.score == null || this.gBest.initials == null) {
+		if(this.gBest.score == null){
 			this.gBest.score = localStorage.getItem('gBest');
-			this.gBest.initials = localStorage.getItem('gBestIni');
+			this.gBest.initials = localStorage.getItem('gBestIni');	
 		}
 
 	}
