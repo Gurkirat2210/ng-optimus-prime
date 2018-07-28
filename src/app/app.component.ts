@@ -62,9 +62,10 @@ export class AppComponent implements OnInit {
 			this.gBest.initials = localStorage.getItem('gBestIni');
 		}
 		
-		if (this.gBest.score && this.best > this.gBest.score) {
+		if (this.gBest.score != null && this.best > this.gBest.score) {
 			this.gBest.score = this.best;
 			this.gBest.initials = this.ipAddress + '';
+			this.saveGBestLocally();
 			this.saveGBestGlobally();
 		}
 
