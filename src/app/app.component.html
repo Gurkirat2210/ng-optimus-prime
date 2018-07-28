@@ -6,53 +6,62 @@
 	</h1>
 	<div class="row" *ngIf=" inGame ">
 		<div class="width-25">
-			<h2>
-				<span>Level</span>
-				<br> {{level}}
+
+			<span>Level
+				<br>
+			</span>
+			<h2> {{level}}
 			</h2>
 		</div>
 		<div class="width-25">
 			<h2>
-				<span>Score</span>
+				<span>Score
+					<br>
+				</span>
 				<br> {{score}}
 			</h2>
 		</div>
 		<div class="width-25">
-			<h2>
-				<span>Time</span>
-				<br> {{time}}
+			<span>Time
+				<br>
+			</span>
+			<h2> {{time}}
 			</h2>
 		</div>
 		<div class="width-25">
-			<h2>
-				<span>Lives</span>
-				<br>{{lives}}
+			<span>Lives
+				<br>
+			</span>
+			<h2>{{lives}}
 			</h2>
 		</div>
 	</div>
 	<div class="row" *ngIf=" !inGame ">
 		<div class="width-33">
+			<span>Your Best
+				<br>
+			</span>
 			<h2>
-				<span>Your Best</span>
-				<br> {{best}}
+				{{best}}
 			</h2>
 		</div>
 		<div class="width-33">
+			<span>Score
+				<br>
+			</span>
 			<h2>
-				<span>Score</span>
-				<br> {{score}}
+				{{score}}
 			</h2>
 		</div>
 		<div class="width-33">
+			<span>Global Best
+				<br>
+			</span>
 			<h2>
-				<span>Top Rank
-					<span *ngIf="gBest.initials">: {{(gBest.initials.length>12)? (gBest.initials | slice:0:6)+'..':(gBest.initials) }}</span>
-				</span>
-				<br>{{gBest.score}}
+				{{gBest.score}}
 				<img *ngIf="!gBest.score" class="loader" src="assets/loader2.gif" />
 			</h2>
-		</div>
-		<div>
+			<span *ngIf="gBest.initials"><br>{{(gBest.initials.length>10)?(gBest.initials|slice:0:8)+'..':(gBest.initials)}}</span>
 		</div>
 	</div>
 	<div class="list">
@@ -67,7 +76,7 @@
 			<label *ngFor="let num of toLearn">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;</label>
 		</div>
 		<h5 *ngIf="!inGame">
-			<input type="text" class="form-control" [maxlength]="12" id="name" placeholder="Enter your intials to start..." [(ngModel)]="name"
+			<input type="text" class="form-control" [maxlength]="10" id="name" placeholder="Enter your intials to start..." [(ngModel)]="name"
 			/>
 			<br>
 			<span *ngIf="name">Click/Tap to start</span>

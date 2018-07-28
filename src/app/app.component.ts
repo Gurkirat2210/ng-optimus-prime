@@ -157,7 +157,7 @@ export class AppComponent implements OnInit {
 		if (this.inGame) {
 			this.onSubmit(!isEnter);
 		} else if (this.name && !this.isInput(event)) {
-			this.name = this.name.substr(0, 12);
+			this.name = this.name.trim().substr(0, 10);
 			localStorage.setItem("name", this.name);
 			this.begin();
 		}

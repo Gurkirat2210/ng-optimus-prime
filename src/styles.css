@@ -26,6 +26,7 @@ span{
 	color: darkgrey;
 	font-size: 15px;
 	font-weight: bold;
+	height: 15px;
 }
 
 input#myInput{
