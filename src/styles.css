@@ -50,3 +50,27 @@ input#myInput{
 img.loader{
 	width:15%;
 }
+
+.form-control {
+	color:chocolate;
+	font-size: 1.75rem;
+	width: auto;
+	border: 0;
+	background: transparent;
+	display: inline;
+	text-align: center;
+}
+
+.form-control:focus {
+	border: 0;
+	border-bottom: 0;
+	color: black;
+}
+
+.form-control#name {
+	border-bottom: solid 2px darkgrey;
+}
+
+.form-control#name:focus {
+	color:chocolate;
+}
