@@ -59,8 +59,10 @@ export class AppComponent implements OnInit {
 			if (this.gBest.score != null && this.best > this.gBest.score) {
 				this.gBest.score = this.best;
 				this.gBest.initials = this.name;
-				this.saveGBestLocally();
 				this.saveGBestGlobally();
+			}
+			if (this.gBest.score == null) {
+				this.saveGBestLocally();
 			}
 		});
 
