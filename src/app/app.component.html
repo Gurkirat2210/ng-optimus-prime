@@ -45,8 +45,9 @@
 		</div>
 		<div class="width-33">
 			<h2>
-				<span>Global Best</span>
-				<br>{{gBest.score}}<img *ngIf="!gBest.score" class="loader" src="assets/loader2.gif"/>
+				<span>Global Best<span *ngIf="gBest.initials">: {{gBest.initials}}</span></span>
+				<br>{{gBest.score}}
+				<img *ngIf="!gBest.score" class="loader" src="assets/loader2.gif" />
 			</h2>
 		</div>
 		<div>
@@ -56,16 +57,17 @@
 		<h3>
 			<span>Guess the next prime number</span>
 			<br>{{prevStr}}
-			<label *ngIf="inGame">,
-				<input type="number" min="1" [(ngModel)]="input" (keyup)="enter($event)" #myInput/>{{ myInput.focus() }}</label>
+			<label *ngIf="inGame">
+				<input type="number" min="1" [(ngModel)]="input" (keyup)="enter($event)" #myInput id="myInput" />{{ myInput.focus() }}</label>
 		</h3>
 		<div class="incorrect" *ngIf="toLearn.length> 0">
 			Remember:
-			<label *ngFor="let num of toLearn">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;
-			</label>
+			<label *ngFor="let num of toLearn">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;</label>
 		</div>
-		<h3>
-			<span *ngIf="!inGame">Click to start</span>
-		</h3>
+		<h5 *ngIf="!inGame">
+			<input type="text" maxlength="12" placeholder="Enter your intials to start..." [(ngModel)]="name" />
+			<br>
+			<span *ngIf="name">Click to start</span>
+		</h5>
 	</div>
 </div>

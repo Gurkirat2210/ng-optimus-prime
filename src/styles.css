@@ -28,9 +28,10 @@ span{
 	font-weight: bold;
 }
 
-input{
+input#myInput{
 	width: 100px;
 }
+
 
 .incorrect{
 	color: red;

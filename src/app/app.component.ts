@@ -13,9 +13,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
 
-	constructor(private http: HttpClient) {
-		this.http.get('https://jsonip.com').subscribe((ipOfNetwork) =>
-			this.ipAddress = ipOfNetwork['ip']);
+	constructor(private http: HttpClient, private eleRef: ElementRef) {
 	}
 
 	timer = timer(0, 1000);
@@ -52,22 +50,27 @@ export class AppComponent implements OnInit {
 			this.best = 0;
 		}
 
-		this.http.get('https://jsonip.com').subscribe(ipOfNetwork => {
-			this.ipAddress = ipOfNetwork['ip'];
-			this.http.get(this.SERVER_GET).subscribe(res => {
+		this.name = localStorage.getItem('name');
+
+		this.http.get(this.SERVER_GET).subscribe(res => {
+			if (res) {
 				this.gBest = <{ score: any, initials: string }>res;
-				if (this.gBest.score != null && this.best > this.gBest.score) {
-					this.gBest.score = this.best;
-					this.gBest.initials = this.ipAddress + '';
-					this.saveGBestGlobally();
-				}
+			}
+			if (this.gBest.score != null && this.best > this.gBest.score) {
+				this.gBest.score = this.best;
+				this.gBest.initials = this.name;
 				this.saveGBestLocally();
-			});
+				this.saveGBestGlobally();
+			}
 		});
 
-		if(this.gBest.score == null){
+		// this.http.get('https://jsonip.com').subscribe(ipOfNetwork => {
+		// 	this.ipAddress = ipOfNetwork['ip'];
+		// });
+
+		if (this.gBest.score == null) {
 			this.gBest.score = localStorage.getItem('gBest');
-			this.gBest.initials = localStorage.getItem('gBestIni');	
+			this.gBest.initials = localStorage.getItem('gBestIni');
 		}
 
 	}
@@ -97,7 +100,7 @@ export class AppComponent implements OnInit {
 
 		if (this.best > this.gBest.score) {
 			this.gBest.score = this.best;
-			this.gBest.initials = this.ipAddress.toString();
+			this.gBest.initials = this.name;
 			this.saveGBestLocally();
 			this.saveGBestGlobally();
 		}
@@ -148,10 +151,12 @@ export class AppComponent implements OnInit {
 	}
 
 	enter(event: any): void {
+		let isEnter = event.keyCode == 13;
 		if (this.inGame) {
-			this.onSubmit(event.keyCode != 13);
-		} else {
-			this.name = name;
+			this.onSubmit(!isEnter);
+		} else if (this.name && !this.isInput(event)) {
+			this.name = this.name.substr(0, 12);
+			localStorage.setItem("name", this.name);
 			this.begin();
 		}
 	}
@@ -184,7 +189,7 @@ export class AppComponent implements OnInit {
 	}
 
 	getLives(level: number, mistakes: number) {
-		return level - mistakes + 1;
+		return level - mistakes //+ 1;
 	}
 
 	saveGBestLocally() {
@@ -204,4 +209,8 @@ export class AppComponent implements OnInit {
 		});
 	}
 
+	isInput(event): boolean {
+		let element: HTMLElement = event.target as HTMLElement;
+		return element.localName == "input";
+	}
 }
