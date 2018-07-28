@@ -6,7 +6,6 @@
 	</h1>
 	<div class="row" *ngIf=" inGame ">
 		<div class="width-25">
-
 			<span>Level
 				<br>
 			</span>
@@ -14,11 +13,11 @@
 			</h2>
 		</div>
 		<div class="width-25">
+			<span>Score
+				<br>
+			</span>
 			<h2>
-				<span>Score
-					<br>
-				</span>
-				<br> {{score}}
+				{{score}}
 			</h2>
 		</div>
 		<div class="width-25">
@@ -61,7 +60,8 @@
 				{{gBest.score}}
 				<img *ngIf="!gBest.score" class="loader" src="assets/loader2.gif" />
 			</h2>
-			<span *ngIf="gBest.initials"><br>{{(gBest.initials.length>10)?(gBest.initials|slice:0:8)+'..':(gBest.initials)}}</span>
+			<span *ngIf="gBest.initials">
+				<br>{{(gBest.initials.length>10)?(gBest.initials|slice:0:8)+'..':(gBest.initials)}}</span>
 		</div>
 	</div>
 	<div class="list">
