@@ -45,8 +45,8 @@
 		</div>
 		<div class="width-33">
 			<h2>
-				<span>Global Best
-					<span *ngIf="gBest.initials">: {{gBest.initials}}</span>
+				<span>Top Rank
+					<span *ngIf="gBest.initials">: {{(gBest.initials.length>12)? (gBest.initials | slice:0:6)+'..':(gBest.initials) }}</span>
 				</span>
 				<br>{{gBest.score}}
 				<img *ngIf="!gBest.score" class="loader" src="assets/loader2.gif" />
@@ -67,7 +67,8 @@
 			<label *ngFor="let num of toLearn">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;</label>
 		</div>
 		<h5 *ngIf="!inGame">
-			<input type="text" class="form-control" maxlength="12" id="name" placeholder="Enter your intials to start..." [(ngModel)]="name" />
+			<input type="text" class="form-control" [maxlength]="12" id="name" placeholder="Enter your intials to start..." [(ngModel)]="name"
+			/>
 			<br>
 			<span *ngIf="name">Click/Tap to start</span>
 		</h5>
