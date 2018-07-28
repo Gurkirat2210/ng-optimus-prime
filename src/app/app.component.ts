@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
 	timer = timer(0, 1000);
 	subscription: Subscription;
 	ipAddress: Object;
-	SERVER_GET: string = "http://localhost:3000/get";
-	SERVER_SAVE: string = "http://localhost:3000/save";
+	SERVER_GET: string = "http://182.71.214.83:3000/get";
+	SERVER_SAVE: string = "http://182.71.214.83:3000/save";
 	TIME: number = 10;
 	START: number = 3;
 	START_STR: string = "2, 3";
