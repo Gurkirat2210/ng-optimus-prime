@@ -1,9 +1,8 @@
 <div id="container" (click)="enter($event)">
 	<h1>
 		OPTIMUS PRIME
-		<br>
-		<span>gurkirat2412@gmail.com</span>
 	</h1>
+	<span><br>gurkirat2412@gmail.com</span>
 	<div class="row" *ngIf=" inGame ">
 		<div class="width-25">
 			<span>Level
@@ -43,14 +42,20 @@
 			<h2>
 				{{best}}
 			</h2>
+			<span>
+				<br>{{(name.length>10)?(name|slice:0:8)+'..':(name)}}
+			</span>
 		</div>
 		<div class="width-33">
-			<span>Score
+			<span>Current
 				<br>
 			</span>
 			<h2>
 				{{score}}
 			</h2>
+			<span>
+				<br>Score
+			</span>
 		</div>
 		<div class="width-33">
 			<span>Global Best
@@ -64,10 +69,17 @@
 				<br>{{(gBest.initials.length>10)?(gBest.initials|slice:0:8)+'..':(gBest.initials)}}</span>
 		</div>
 	</div>
-	<div class="list">
+	<h3 *ngIf="!inGame">
+		<span *ngIf="name">Tap your name to edit</span>
+		<input type="text" class="form-control" [maxlength]="10" id="name" placeholder="Enter your intials to start..." [(ngModel)]="name"
+		/>
+	</h3>
+	<div class="border">
+		<span>Guess the next prime number [<a target="_blank" href="https://en.wikipedia.org/wiki/Prime_number">Help</a>]
+			<br>
+		</span>
 		<h3>
-			<span>Guess the next prime number</span>
-			<br>{{prevStr}}
+			{{prevStr}}
 			<label *ngIf="inGame">,
 				<input type="number" class="form-control" min="1" [(ngModel)]="input" (keyup)="enter($event)" #myInput id="myInput" />{{ myInput.focus() }}</label>
 		</h3>
@@ -75,11 +87,6 @@
 			Remember:
 			<label *ngFor="let num of toLearn">&nbsp;&nbsp;{{num}}&nbsp;&nbsp;</label>
 		</div>
-		<h5 *ngIf="!inGame">
-			<input type="text" class="form-control" [maxlength]="10" id="name" placeholder="Enter your intials to start..." [(ngModel)]="name"
-			/>
-			<br>
-			<span *ngIf="name">Click/Tap to start</span>
-		</h5>
 	</div>
+	<span *ngIf="name && !inGame">Tap anywhere to start</span>
 </div>

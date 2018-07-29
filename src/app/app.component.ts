@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 	TIME: number = 10;
 	START: number = 3;
 	START_STR: string = "2, 3";
-	TIME_MUL: number = 3;
+	TIME_MUL: number = 2;
 
 
 	toLearn: number[] = [];
@@ -213,6 +213,6 @@ export class AppComponent implements OnInit {
 
 	isInput(event): boolean {
 		let element: HTMLElement = event.target as HTMLElement;
-		return element.localName == "input";
+		return element.localName == "input" || element.localName == "a";
 	}
 }

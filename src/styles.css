@@ -3,15 +3,17 @@
 /* You can add global styles to this file, and also import other style files */
 #container{
 	margin: 25px;
-	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family:consolas;
 	text-align:center;
 	height: 100%;
+	color: whitesmoke;
 }
 
 h1{
 	font-size: 70px;
-	color:darkblue;
+	color:plum;
 	line-height: 60px;
+	font-weight: bolder;
 	margin:0;
 }
 
@@ -23,7 +25,6 @@ h2{
 }
 
 span{
-	color: darkgrey;
 	font-size: 15px;
 	font-weight: bold;
 	height: 15px;
@@ -55,7 +56,6 @@ img.loader{
 .form-control {
 	color:chocolate;
 	font-size: 1.75rem;
-	width: auto;
 	border: 0;
 	background: transparent;
 	display: inline;
@@ -63,15 +63,19 @@ img.loader{
 }
 
 .form-control:focus {
-	border: 0;
-	border-bottom: 0;
-	color: black;
-}
-
-.form-control#name {
-	border-bottom: solid 2px darkgrey;
-}
-
-.form-control#name:focus {
+	border: solid 2px chocolate;
+	border-radius: 10px;
 	color:chocolate;
+	background:transparent;
+}
+
+.row, .border{
+	border-radius: 10px;
+	padding: 10px 0;
+	margin: 10px 0;
+	border: solid 2px chocolate;
+	text-align: center;
+}
+.row div{
+	border-radius: 10px;
 }
