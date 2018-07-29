@@ -42,7 +42,7 @@
 			<h2>
 				{{best}}
 			</h2>
-			<span>
+			<span *ngIf="name">
 				<br>{{(name.length>10)?(name|slice:0:8)+'..':(name)}}
 			</span>
 		</div>
