@@ -175,7 +175,7 @@ export class AppComponent implements OnInit {
 				}
 			}
 			if (isPrime) {
-				console.log(num);
+//				console.log(num);
 				return num;
 			}
 		}
