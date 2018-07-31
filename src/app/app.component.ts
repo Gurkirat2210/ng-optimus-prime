@@ -19,8 +19,7 @@ export class AppComponent implements OnInit {
 	timer = timer(0, 1000);
 	subscription: Subscription;
 	ipAddress: Object;
-	SERVER_GET: string = "http://182.71.214.83:3000/get";
-	SERVER_SAVE: string = "http://182.71.214.83:3000/save";
+	SERVER: string = "http://182.71.214.83:3000/";
 	TIME: number = 10;
 	START: number = 3;
 	START_STR: string = "2, 3";
@@ -52,15 +51,17 @@ export class AppComponent implements OnInit {
 
 		this.name = localStorage.getItem('name');
 
-		this.http.get(this.SERVER_GET).subscribe(res => {
+		this.http.get(this.SERVER + 'getMax').subscribe(res => {
 			if (res) {
 				this.gBest = <{ score: any, initials: string }>res;
 			}
+			/*
 			if (this.gBest.score != null && this.best > this.gBest.score) {
 				this.gBest.score = this.best;
 				this.gBest.initials = this.name;
 				this.saveGBestGlobally();
 			}
+			*/
 			if (this.gBest.score != null) {
 				this.saveGBestLocally();
 			}
@@ -100,8 +101,8 @@ export class AppComponent implements OnInit {
 		}
 		localStorage.setItem('best', this.best + '');
 
-		if (this.best > this.gBest.score) {
-			this.gBest.score = this.best;
+		if (this.score > this.gBest.score) {
+			this.gBest.score = this.score;
 			this.gBest.initials = this.name;
 			this.saveGBestLocally();
 			this.saveGBestGlobally();
@@ -175,7 +176,7 @@ export class AppComponent implements OnInit {
 				}
 			}
 			if (isPrime) {
-//				console.log(num);
+				//				console.log(num);
 				return num;
 			}
 		}
@@ -200,7 +201,7 @@ export class AppComponent implements OnInit {
 	}
 
 	saveGBestGlobally() {
-		this.http.post(this.SERVER_SAVE, this.gBest, {
+		this.http.post(this.SERVER + 'save', this.gBest, {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json'
 			})
